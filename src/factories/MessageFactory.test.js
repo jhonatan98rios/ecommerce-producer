@@ -1,4 +1,4 @@
-const { generateInstance } = require('./heroFactory');
+const { generateInstance } = require('./MessageFactory');
 
 
 test('Testing heroRepository.find method', () => {

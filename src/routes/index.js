@@ -1,39 +1,43 @@
-const heroFactory = require('../factories/heroFactory')
-const heroService = heroFactory.generateInstance()
-const Hero = require('../entities/hero')
+const Message = require('../entities/Message')
+const messageFactory = require('../factories/MessageFactory')
+const messageService = messageFactory.generateInstance()
 const { DEFAULT_HEADER } = require('../constants')
 const { handleError } = require('../exceptions')
 
 const routes = {
 
-  '/heroes:get': async (request, response) => {
+  '/message:get': async (request, response) => {
     const { id } = request.queryString
-    const heroes = await heroService.find(id)
 
     response.write(
-      JSON.stringify({ result: heroes })
+      JSON.stringify({ result: id })
     )
 
     response.end()
   },
 
 
-  ':heroes:post': async (request, response) => {
+
+
+  '/message:post': async (request, response) => {
     for await (const data of request) {
+
       try {
 
         const item = JSON.parse(data)
-        const hero = new Hero(item)
-        const { error, valid } = hero.isValid()
+        const message = new Message(item)
+        const { valid, error } = message.isValid()
 
         if (!valid) {
           response.writeHead(400, DEFAULT_HEADER)
-          response.write(JSON.stringify({ error: error.join(',') }))
+          response.write(
+            JSON.stringify({ error: error.join(',')})
+          )
         }
 
-        const id = await heroService.create(hero)
+        const id = await messageService.create(message)
         response.writeHead(201, DEFAULT_HEADER)
-        response.write(JSON.stringify({ success: 'User created with success!!', id }))
+        response.write(JSON.stringify({ success: 'Message delivered with success!!', id }))
 
         return response.end()
 
@@ -43,6 +47,7 @@ const routes = {
       }
     }
   },
+
 
 
   default: (request, response) => {

@@ -1,9 +1,7 @@
-class Hero {
-  constructor({ id, name, age, power }) {
+class Message {
+  constructor({ data }) {
     this.id = Math.floor(Math.random() * 100) + Date.now()
-    this.name = name
-    this.age = age
-    this.power = power
+    this.content = data
   }
 
   isValid() {
@@ -19,4 +17,4 @@ class Hero {
   }
 }
 
-module.exports = Hero
+module.exports = Message
