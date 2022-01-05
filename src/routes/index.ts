@@ -1,25 +1,32 @@
-const Message = require('../entities/Message')
-const messageFactory = require('../factories/MessageFactory')
+import { IncomingMessage, ServerResponse } from 'http';
+
+import { DEFAULT_HEADER } from '../constants'
+
+import Message from '../entities/Message'
+import messageFactory from '../factories/MessageFactory'
 const messageService = messageFactory.generateInstance()
-const { DEFAULT_HEADER } = require('../constants')
-const { handleError } = require('../exceptions')
+import handleError from '../exceptions'
+
+
+interface RoutesInterface {
+  '/message:get': () => Promise<ServerResponse>
+  '/message:post': () => Promise<ServerResponse>
+}
+
 
 const routes = {
 
-  '/message:get': async (request, response) => {
-    const { id } = request.queryString
+  '/message:get': async (request: IncomingMessage, response: ServerResponse) => {
 
     response.write(
-      JSON.stringify({ result: id })
+      JSON.stringify({ result: "Hello World" })
     )
 
-    response.end()
+    return response.end()
   },
 
 
-
-
-  '/message:post': async (request, response) => {
+  '/message:post': async (request: IncomingMessage, response: ServerResponse) => {
     for await (const data of request) {
 
       try {
@@ -48,12 +55,10 @@ const routes = {
     }
   },
 
-
-
-  default: (request, response) => {
+  default: (request: IncomingMessage, response: ServerResponse) => {
     response.write("Erro ao se conectar")
-    response.end()
+    return response.end()
   }
 }
 
-module.exports = routes
+export {routes, RoutesInterface}

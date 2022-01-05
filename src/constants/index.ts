@@ -7,6 +7,6 @@ const BROKERS = ['localhost:9092']
 const CLIENT_ID = 'my-app'
 const TOPIC_NAME = 'topic-test'
 
-module.exports = {
+export {
     PORT, DEFAULT_HEADER, INITIAL_RETRY_TIME, RETRIES, BROKERS, CLIENT_ID, TOPIC_NAME
 }

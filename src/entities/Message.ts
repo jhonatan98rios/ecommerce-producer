@@ -1,5 +1,13 @@
+interface MessageInterface {
+  data: string
+}
+
 class Message {
-  constructor({ data }) {
+
+  id: number
+  content: string
+
+  constructor({ data }: MessageInterface) {
     this.id = Math.floor(Math.random() * 100) + Date.now()
     this.content = data
   }
@@ -7,7 +15,7 @@ class Message {
   isValid() {
     const propertyNames = Object.getOwnPropertyNames(this)
     const amountInvalid = propertyNames
-      .map(property => (!!this[property]) ? null : `${property} is missing`)
+      .map((property) => (!!this[property as keyof Message]) ? null : `${property} is missing`)
       .filter(item => !!item)
 
     return {
@@ -17,4 +25,4 @@ class Message {
   }
 }
 
-module.exports = Message
+export default Message

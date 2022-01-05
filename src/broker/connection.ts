@@ -1,5 +1,5 @@
-const { Kafka } = require('kafkajs')
-const { INITIAL_RETRY_TIME, RETRIES, BROKERS, CLIENT_ID } = require('../constants')
+import { Kafka } from 'kafkajs'
+import { INITIAL_RETRY_TIME, RETRIES, BROKERS, CLIENT_ID } from '../constants'
 
 const kafka = new Kafka({
   clientId: CLIENT_ID,
@@ -10,4 +10,4 @@ const kafka = new Kafka({
   }
 })
 
-module.exports = kafka
+export default kafka
